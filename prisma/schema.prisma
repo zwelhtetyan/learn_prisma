@@ -13,12 +13,15 @@ datasource db {
 model User {
   id             String           @id @default(cuid())
   name           String
+  age            Int
   email          String           @unique
   isAdmin        Boolean
   writtenPost    Post[]           @relation("writtenPosts")
   favoritePost   Post[]           @relation("favoritePosts")
   Post           Post[]
   userPreference UserPreferences?
+
+  @@unique([name, age])
 }
 
 model UserPreferences {
@@ -30,7 +33,7 @@ model UserPreferences {
 
 model Post {
   id           String     @id @default(cuid())
-  rating       Float
+  title        String
   createAt     DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   author       User       @relation("writtenPosts", fields: [authorId], references: [id])
@@ -44,6 +47,6 @@ model Post {
 
 model Category {
   id    String @id @default(cuid())
-  name  String
+  name  String @unique
   posts Post[]
 }
