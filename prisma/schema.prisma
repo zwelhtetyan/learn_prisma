@@ -11,15 +11,14 @@ datasource db {
 }
 
 model User {
-  id             String           @id @default(cuid())
-  name           String
-  age            Int
-  email          String           @unique
-  role           Role             @default(BASIC)
-  writtenPost    Post[]           @relation("writtenPosts")
-  favoritePost   Post[]           @relation("favoritePosts")
-  Post           Post[]
-  userPreference UserPreferences?
+  id           String @id @default(cuid())
+  name         String
+  age          Int
+  email        String @unique
+  role         Role   @default(BASIC)
+  writtenPost  Post[] @relation("writtenPosts")
+  favoritePost Post[] @relation("favoritePosts")
+  // userPreference UserPreferences?
 
   @@unique([name, age])
   @@index([email])
@@ -28,8 +27,8 @@ model User {
 model UserPreferences {
   id          String  @id @default(cuid())
   emailUpdate Boolean
-  user        User    @relation(fields: [userId], references: [id])
-  userId      String  @unique
+  // user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // userId      String  @unique
 }
 
 model Post {
@@ -41,8 +40,6 @@ model Post {
   authorId     String
   favoritedBy  User?      @relation("favoritePosts", fields: [favoriteById], references: [id])
   favoriteById String?
-  User         User?      @relation(fields: [userId], references: [id])
-  userId       String?
   categories   Category[]
 }
 

@@ -1,11 +1,9 @@
 import { prisma } from "./client";
 
 const main = async () => {
-  const postsByCat = await prisma.post.findMany({
-    where: { categories: { some: { name: "animal" } } },
-  });
-
-  console.log(postsByCat);
+  // need to check user and user_preference relation)
 };
 
-main();
+main()
+  .catch((err) => console.log(err.message))
+  .finally(async () => await prisma.$disconnect());
