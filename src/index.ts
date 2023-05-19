@@ -1,18 +1,10 @@
 import { prisma } from "./client";
 
 const main = async () => {
-  // need to check user and user_preference relation)
-
-  await prisma.user.deleteMany();
-
-  const r = await prisma.user.create({
-    data: {
-      name: "zw",
-      age: 21,
-      email: "zw@gmail.com",
-      userPreferences: { create: { emailUpdate: true } },
+  const r = await prisma.post.findMany({
+    where: {
+      author: { is: { age: 21 } },
     },
-    include: { userPreferences: true },
   });
 
   console.log(r);
