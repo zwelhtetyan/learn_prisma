@@ -18,9 +18,9 @@ model User {
   role             Role             @default(BASIC)
   writtenPost      Post[]           @relation("writtenPosts")
   favoritePost     Post[]           @relation("favoritePosts")
-  // userPreference UserPreferences?
   userPreferences  UserPreferences? @relation(fields: [userPreferenceId], references: [id])
   userPreferenceId String?          @unique
+  // userPreference UserPreferences?
 
   @@unique([name, age])
   @@index([email])
